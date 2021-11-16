@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto001/controllers/home_controller.dart';
 import 'package:projeto001/models/post_models.dart';
 import 'package:projeto001/repositories/home_repository_imp.dart';
+import 'package:projeto001/services/prefs_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,6 +25,18 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              PrefService.logout();
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/login', (_) => true);
+            },
+            icon: const Icon(
+              Icons.logout,
+            ),
+          ),
+        ],
       ),
       body: ValueListenableBuilder<List<PostModel>>(
         valueListenable: _controller.posts,
